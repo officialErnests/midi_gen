@@ -7,7 +7,7 @@ using namespace std;
 
 //docs used kek https://ccrma.stanford.edu/~craig/14q/midifile/MidiFileFormat.html
 ofstream fout;
-void noteInsert(vector<int>& track, int value);
+void noteInsert(vector<int>& track, int value, int value2, int value3, int value4);
 void bitCreator(vector<int> p_vector);
 int main() {
     fout.open("test1.mid", ios::binary | ios::out);
@@ -36,12 +36,63 @@ int main() {
 
     unsigned char c{};
     funimg >> std::noskipws;
+    int  buffer[4];
+    int index = 0;
     while (funimg >> c) {
-        noteInsert(Track_event_1, (int)c);
+        buffer[index] = (int)c;
+        index ++;
+        if (index > 3) {
+            index = 0;
+            noteInsert(Track_event_1, buffer[0], buffer[1], buffer[2], buffer[3]);
+        }
     }
+    while (index < 3)
+    {
+        buffer[index] = 50;
+        index ++;
+    }
+    noteInsert(Track_event_1, buffer[0], buffer[1], buffer[2], buffer[3]);
+    
     //End of paste
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 53, 50);
+    // noteInsert(Track_event_1, 50);
     // noteInsert(Track_event_1, 53);
+    // noteInsert(Track_event_1, 50);
     // noteInsert(Track_event_1, 53);
+    // noteInsert(Track_event_1, 50);
+    // noteInsert(Track_event_1, 53);
+    // noteInsert(Track_event_1, 50);
+    // noteInsert(Track_event_1, 53);
+    // noteInsert(Track_event_1, 50);
+    // noteInsert(Track_event_1, 53);
+    // noteInsert(Track_event_1, 50);
+    // noteInsert(Track_event_1, 53);
+    // noteInsert(Track_event_1, 50);
+    // noteInsert(Track_event_1, 53);
+    // noteInsert(Track_event_1, 50);
     // noteInsert(Track_event_1, 53);
     // noteInsert(Track_event_1, 53);
     // noteInsert(Track_event_1, 53);
@@ -91,11 +142,11 @@ int main() {
     fout.close();
     funimg.close();
 }
-void noteInsert(vector<int>& track, int value){
+void noteInsert(vector<int>& track, int value, int value2, int value3, int value4){
     track.insert(track.end(),{
         //first key press and relese
-        0x00, 0x90, value, 0x40,
-        0x10, 0x80, value, 0x40,
+        0x00, 0x90, value, value3,
+        0x10, 0x80, value, value4,
     });
 }
 
