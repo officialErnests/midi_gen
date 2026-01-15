@@ -41,16 +41,7 @@ int main() {
 }
 void trackChunkCreate(std::ofstream &fout, char weird_tempo[4])
 {
-    // Creates header for track chunk
-    char weird_tempo[4] = {0x4D, 0x54, 0x72, 0x6B};
-    fout.write(weird_tempo, sizeof(weird_tempo));
-
-    // Next parts lenght in bytes
-    char weird_tempo[4] = {0x00, 0x00, 0x00, 0x43};
-    fout.write(weird_tempo, sizeof(weird_tempo));
-
-    
-    // 
-    char weird_tempo[4] = {0x00, 0x00, 0x00, 0x43};
+    //jjust some testing
+    char weird_tempo[4] = {0xFF, 0x00, 0x00, 0x43};
     fout.write(weird_tempo, sizeof(weird_tempo));
 }
