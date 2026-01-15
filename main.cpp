@@ -11,15 +11,55 @@ void bitCreator(vector<int> p_vector);
 int main() {
     fout.open("test.mid", ios::binary | ios::out);
 
-    vector<int> Header = {
+    vector<int> Header_chunk = {
         0x4d, 0x54, 0x68, 0x64,
         0x00, 0x00, 0x00, 0x06,
         0x00, 0x01,
-        0x00, 0x02,
+        0x00, 0x01, // following tracks
         0x00, 0x80
     };
 
-    bitCreator(Header);
+    vector<int> Track_event_1 = {
+        //Sets tempo
+        0x00, 0xff,
+        0x51,
+        0x03,
+        0x06, 0x8a, 0x1b,
+        //first key press and relese
+        0x00, 0x90, 0x3c, 0x40,
+        0x10, 0x80, 0x3c, 0x40,
+        //end
+        0x00, 0xff,
+        0x2f, 0x00,
+    };
+
+    // Track_event_1.push_back (
+    //     {}
+    // );
+    //THXX LAD!!
+    // Source - https://stackoverflow.com/a
+    // Posted by caf, modified by community. See post 'Timeline' for change history
+    // Retrieved 2026-01-15, License - CC BY-SA 3.0
+
+    unsigned char bytes[4];
+    unsigned long n = Track_event_1.size();
+
+    bytes[0] = (n >> 24) & 0xFF;
+    bytes[1] = (n >> 16) & 0xFF;
+    bytes[2] = (n >> 8) & 0xFF;
+    bytes[3] = n & 0xFF;
+    // END OF PASTED
+
+    vector<int> Track_chunk = {
+        0x4d, 0x54, 0x72, 0x6b,
+        bytes[0], bytes[1], bytes[2], bytes[3], // sets size the funny way XD
+    };
+    
+    
+
+    bitCreator(Header_chunk);
+    bitCreator(Track_chunk);
+    bitCreator(Track_event_1);
     fout.close();
 }
 void bitCreator(vector<int> p_vector){
