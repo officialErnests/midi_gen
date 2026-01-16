@@ -15,11 +15,10 @@ int main() {
     string path;
     cout << "Hello to noob.encrypt ;DD\nPlease select file name to save to (no .mid neccesary):";
     cin >> path;
-    path = ".mid";
+    path += ".mid";
     string path_load;
     cout << "Pleas name file to load from (including extension):";
     cin >> path_load;
-    cout << "Hello to noob.encrypt ;DD\nPlease select file name to save to (no .mid neccesary):";
     fout.open(path, ios::binary | ios::out);
     ifstream funimg;
     funimg.open(path_load, std::ios_base::binary);

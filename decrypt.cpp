@@ -31,11 +31,47 @@ int main() {
     int index = 0;
 
     int track_num;
-
+    char buffer[2];
+    int track_cycle = 0;
+    int buffer_index = 0;
+    int tracker = 0;
+    char holder[1];
+    int temp_inc = 0;
     while (midi_decrypt >> c) {
-        test[0] = (int)c;
+        holder[1] = c;
+        buffer[buffer_index] = (int)c;
         if (index == 11) {
             track_num = (int)c;
+        } 
+        tracker -= 1;
+
+        switch (tracker)
+        {
+        case 6:
+        case 5:
+            fout.write(holder, 1);
+        case 4:
+        case 3:
+            break;
+        case 1:
+        case 0:
+            fout.write(holder, 1);
+        default:
+            break;
+        }
+
+        if (buffer_index == 1) {
+            cout << (int)buffer[buffer_index] << " " << (int)(-111+ track_cycle) << "\n";
+            if ((int)buffer[buffer_index] == (int)(-111+ track_cycle)) {
+                tracker = 7;
+                cout << "YESS";
+                track_cycle = (track_cycle+1)%track_num;
+            } else {
+                buffer_index = 0;
+            }
+        } else 
+        if (buffer[buffer_index] == 0) {
+            buffer_index ++;
         }
         index ++;
     }
