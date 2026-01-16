@@ -113,8 +113,8 @@ void noteInsert(vector<int>& track, int value, int value2, int value3, int value
 
     track.insert(track.end(),{
         //first key press and relese
-        0x00, 144 + i, value, value3,
-        0x10, 128 + i, value, value4,
+        0x00, 144 + i, value, value2,
+        0x10, 128 + i, value3, value4,
     });
 }
 
