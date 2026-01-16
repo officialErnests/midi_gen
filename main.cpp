@@ -24,7 +24,7 @@ int main() {
 
     
     int track_num;
-    cout << "number of tracks ;PP\n(atm only supported max 15.. i think?)";
+    cout << "number of tracks ;PP\n(decryption algorithm only works with one, but you can have up to 15 of tracks ;PP)";
     cin >> track_num;
     track_num = clamp(track_num, 1, 15);
     int track_cycle = 0;
@@ -121,7 +121,7 @@ void bitCreator(vector<int> p_vector){
     char* result = new char[p_vector.size()] {};
     for (int i = 0; i < p_vector.size(); i++)
     {
-        cout << hex << p_vector[i] << " ";
+        // cout << hex << p_vector[i] << " ";
         result[i] = p_vector[i];
     }
     fout.write(result, p_vector.size());

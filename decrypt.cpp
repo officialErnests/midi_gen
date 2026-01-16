@@ -48,50 +48,46 @@ int main() {
             }
             if (whole[index-3] == 0x00 && whole[index-2] == 0xff && whole[index-1] == 0x2f && whole[index] == 0x00) {
                 cout << "\nExit:"<< index;
-                exit_points.push_back(index + 1);
+                exit_points.push_back(index);
             }
         }
         index ++;
     }
-    char tempo[1];
     
+    // for (int i = 0; i < entry_points.size(); i++)
+    // {
+    //     char tempo[1];
+    //     index = 13;
+    //     while (entry_points[i] + index + 1 < exit_points[i])
+    //     {
+    //         tempo[0] = whole[entry_points[i] + index];
+    //         fout.write(tempo, 1);
+    //         tempo[0] = whole[entry_points[i] + index + 1];
+    //         fout.write(tempo, 1);
+    //         index += 4;
+    //     }
+    // }
+    
+    
+    char tempo[1];
     index = 13;
-    while (index + entry_points[0] < exit_points[0])
+    int size_v = entry_points.size();
+    while (index + entry_points[0] + 1 < exit_points[0])
     {
-        for (int i = 0; i < entry_points.size(); i++)
+        for (int i = 0; i < size_v; i++)
         {
-            tempo[0] = whole[(int)(entry_points[i] + index)];
+            if (entry_points[i] + index + 1 >= exit_points[i]) {
+                cout << i << " - SKIP\n";
+                continue;
+            }
+            tempo[0] = whole[entry_points[i] + index];
             fout.write(tempo, 1);
-            tempo[0] = whole[(int)(entry_points[i] + index + 1)];
+            tempo[0] = whole[entry_points[i] + index + 1];
             fout.write(tempo, 1);
         }
         index += 4;
         // cout << index << "/" << exit_points[0] << "\n";
     }
-    
-    
-    
-    
-    // cout << '\n' << hex << whole[(int)(entry_points[0] + 15)];
-    
-
-    //output
-    // bool returner = false;
-    // int ind = 0;
-    // char tempo[1];
-    // while (!returner)
-    // {
-    //     returner = true;
-    //     for (auto b : bufferer) {
-    //         if (b.size() > ind) {
-    //             tempo[0] = b[ind];
-    //             cout << hex << b[ind] << " ";
-    //             returner = false;
-    //             fout.write(tempo, 1);
-    //         }
-    //     }
-    //     ind ++;
-    // }
     
 
     fout.close();

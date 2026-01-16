@@ -1,5 +1,36 @@
 # Idk have midi anyliss
 
+# HOW TO RUN
+-> Main.exe // Main.cpp is the file that encrypts<br>
+for it you need to firstly provide what mid file name you want<br>
+then you want to provide the file you will be encrypting<br>
+then if you want to be able to decrypt file you put in 1, else put any number between 1 and 15 <br>
+(There is a small bug in code if i try to decrypt anything but 1, it flips some numbers around ;-; [you could use it for some weird file destruction art ;PP])<br>
+-> decrypt.exe // decrypt.cpp is the file to decrypt
+when run you need to suply .mid file
+then you need to name new file with extension
+and it exports ;DD (it also detects how many layers you put in, but the decryption is ttaaaad bit broke T.T)
+
+# Example
+
+```
+PS C:\Dev\LANG\CPP\SongGen> .\main.exe
+    Hello to noob.encrypt ;DD
+    Please select file name to save to (no .mid neccesary):Example/cool     
+    Pleas name file to load from (including extension):Example/funy.png
+    number of tracks ;PP
+    (atm only supported max 15.. i think?)1
+PS C:\Dev\LANG\CPP\SongGen> .\decrypt.exe
+    Enter file to load from (no .mid neccesary):Example/cool 
+    Enter file to save to (extension is neccesary):Example/wasThis.png
+
+    Entry:17
+    Exit:44520
+```
+
+# Songs
+also songs are encrypted files put in lmms and added some music instruments
+
 ## BEFORE YOU ASK, THIS WAS MANUALY STUDIED (NO AI HELP)
 I used 2 days of me studing these docs and my lmms file export XD
 Used docs:
