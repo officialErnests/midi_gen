@@ -28,113 +28,69 @@ int main() {
     unsigned char c{};
     midi_decrypt >> std::noskipws;
     int index = 0;
-
     int track_num;
-    char buffer[2];
-    int track_cycle = 0;
-    int buffer_index = 0;
-    int tracker = 0;
-    char holder[1];
-    int temp_inc = 0;
-    vector<vector<uint8_t>> bufferer = {};
-    vector<uint8_t> bufferer_er = {};
-    //Vector buffer  pushed onto buffer
-    int data_size = 0;
+
+    vector<vector<uint8_t>> tracks;
+    vector<uint8_t> track;
+    vector<uint8_t> whole;
+    vector<int> entry_points;
+    vector<int> exit_points;
     while (midi_decrypt >> c) {
-        holder[0] = c;
-        buffer[buffer_index] = (int)c;
+
+        whole.push_back(c);
         if (index == 11) {
             track_num = (int)c;
-        } 
-        tracker -= 1;
-
-        switch (tracker)
-        {
-        case 6:
-        case 5:
-            data_size ++;
-            bufferer_er.push_back(holder[0]);
-            break;
-        case 4:
-        case 3:
-        break;
-        case 2:
-        case 1:
-            data_size ++;
-            bufferer_er.push_back(holder[0]);
-            break;
-        default:
-            break;
         }
-        // if (tracker > 0) {
-        //     index ++;
-        //     continue;
-        // }
-
-        if (buffer_index == 1) {
-            if ((int)buffer[buffer_index] == (int)(-112+ track_cycle)) {
-                tracker = 7;
-            } else if ((int)buffer[buffer_index] == (int)(-112+ track_cycle+1))
-            {
-                tracker = 7;
-                track_cycle ++;
-                bufferer.push_back(bufferer_er);
-                // bufferer_er.clear();
-                /* code */
-            } else 
-            {
-                buffer_index = 0;
+        if (index > 11) {
+            if (whole[index-3] == 0x4d && whole[index-2] == 0x54 && whole[index-1] == 0x72 && whole[index] == 0x6b) {
+                cout << "\nEntry:"<< index;
+                entry_points.push_back(index + 1);
             }
-        } else 
-        if (buffer[buffer_index] == 0) {
-            buffer_index ++;
+            if (whole[index-3] == 0x00 && whole[index-2] == 0xff && whole[index-1] == 0x2f && whole[index] == 0x00) {
+                cout << "\nExit:"<< index;
+                exit_points.push_back(index + 1);
+            }
         }
         index ++;
     }
-    // bufferer.push_back(bufferer_er);
-    // cout << index;
-    // for (auto a : bufferer) {
-    //     for (auto b : a)
-    //     {
-    //         cout << b << " ";
-    //     }
-    //     cout << "a";
-    // }
-    bool returner = false;
-    int ind = 0;
     char tempo[1];
-    while (!returner)
+    
+    index = 13;
+    while (index + entry_points[0] < exit_points[0])
     {
-        returner = true;
-        for (auto b : bufferer) {
-            if (b.size() > ind) {
-                tempo[0] = b[ind];
-                cout << hex << b[ind] << " ";
-                returner = false;
-                fout.write(tempo, 1);
-            }
+        for (int i = 0; i < entry_points.size(); i++)
+        {
+            tempo[0] = whole[(int)(entry_points[i] + index)];
+            fout.write(tempo, 1);
+            tempo[0] = whole[(int)(entry_points[i] + index + 1)];
+            fout.write(tempo, 1);
         }
-        ind ++;
+        index += 4;
+        // cout << index << "/" << exit_points[0] << "\n";
     }
     
-    // track_cycle = 0;
-    // int track_indexer = 0;
-    // char quick_one[1] = {0};
-    // for (int i = 0; i < data_size; i++)
+    
+    
+    
+    // cout << '\n' << hex << whole[(int)(entry_points[0] + 15)];
+    
+
+    //output
+    // bool returner = false;
+    // int ind = 0;
+    // char tempo[1];
+    // while (!returner)
     // {
-    // // cout<< track_cycle << " " << track_indexer << "\n";
-    // // cout << data_size << " " << i << "\n";
-    // if (bufferer[track_cycle].size() > track_indexer){
-    //     cout << "NOPE";
-    //     quick_one[1] = (int)bufferer[track_cycle][track_indexer];
-    // }
-    // fout.write(quick_one, 1);
-    // track_cycle ++;
-    // if (track_cycle >= track_num ) {
-    //         cout<<"B";
-    //         track_cycle = 0;
-    //         track_indexer ++;
+    //     returner = true;
+    //     for (auto b : bufferer) {
+    //         if (b.size() > ind) {
+    //             tempo[0] = b[ind];
+    //             cout << hex << b[ind] << " ";
+    //             returner = false;
+    //             fout.write(tempo, 1);
+    //         }
     //     }
+    //     ind ++;
     // }
     
 
