@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "main.h"
 #include <algorithm>
 #include <string>
 #include <filesystem>
@@ -37,8 +36,8 @@ int main() {
     int tracker = 0;
     char holder[1];
     int temp_inc = 0;
-    vector<vector<int>> bufferer = {};
-    vector<int> bufferer_er = {};
+    vector<vector<uint8_t>> bufferer = {};
+    vector<uint8_t> bufferer_er = {};
     //Vector buffer  pushed onto buffer
     int data_size = 0;
     while (midi_decrypt >> c) {
@@ -67,6 +66,10 @@ int main() {
         default:
             break;
         }
+        // if (tracker > 0) {
+        //     index ++;
+        //     continue;
+        // }
 
         if (buffer_index == 1) {
             if ((int)buffer[buffer_index] == (int)(-112+ track_cycle)) {
@@ -88,7 +91,7 @@ int main() {
         }
         index ++;
     }
-    bufferer.push_back(bufferer_er);
+    // bufferer.push_back(bufferer_er);
     // cout << index;
     // for (auto a : bufferer) {
     //     for (auto b : a)
@@ -105,7 +108,8 @@ int main() {
         returner = true;
         for (auto b : bufferer) {
             if (b.size() > ind) {
-                tempo[0] = (int)b[ind];
+                tempo[0] = b[ind];
+                cout << hex << b[ind] << " ";
                 returner = false;
                 fout.write(tempo, 1);
             }

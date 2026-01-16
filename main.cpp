@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "main.h"
 #include <algorithm>
 #include <string>
 #include <filesystem>
@@ -122,6 +121,7 @@ void bitCreator(vector<int> p_vector){
     char* result = new char[p_vector.size()] {};
     for (int i = 0; i < p_vector.size(); i++)
     {
+        cout << hex << p_vector[i] << " ";
         result[i] = p_vector[i];
     }
     fout.write(result, p_vector.size());
